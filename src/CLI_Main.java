@@ -18,25 +18,14 @@ public class CLI_Main {
             flag = CLI.parse(input);
 
             if (!flag)  continue;                       //check if the command is right
-            if ( CLI.getCmd().matches("exit") )     break;
 
-            if ( CLI.getCmd().matches("date") && CLI.getArguments().size() == 0 ){
+            if ( CLI.getCmd().matches("exit") )     break;
+            else if ( CLI.getCmd().matches("date") && CLI.getArguments().size() == 0 ){
                 term.date();
                 CLI.emptyattr();
             }
             else if( CLI.getCmd().matches("help") && CLI.getArguments().size() == 0 ){
-                System.out.println("args : List all command arguments\n" +
-                        "date : Current date/time\n" +
-                        "exit : Stop all\n" +
-                        "mkdir [path] : Make new folder\n" +
-                        "mkdir [-v] [path] : Show status of this new created folder\n" +
-                        "mkdir [-v] [-p] [path/newfile/...] : show status of interanl created folder\n" +
-                        "clear : clears the console\n" +
-                        "pwd : print current directory\n" +
-                        "rmdir [path] :remove this path\n" +
-                        "ls : list all files in current directory\n" +
-                        "more [path] : display content of this path\n"+
-                        "cd [path] : change Default directory to this path");
+                term.help();
                 CLI.emptyattr();
             }
             else if(  ( CLI.getCmd().matches("exit")&& CLI.getArguments().size()==0  )  || ( (CLI.getCmd().matches("exit")) && (CLI.getArguments().size()==1) && (CLI.getArguments().get(0).matches("--help")) ) ){

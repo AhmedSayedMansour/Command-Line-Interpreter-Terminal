@@ -186,6 +186,21 @@ public class Terminal{
         }
     }
 
+    public void help(){
+        System.out.println("args : List all command arguments\n" +
+                "date : Current date/time\n" +
+                "exit : Stop all\n" +
+                "mkdir [path] : Make new folder\n" +
+                "mkdir [-v] [path] : Show status of this new created folder\n" +
+                "mkdir [-v] [-p] [path/newfile/...] : show status of interanl created folder\n" +
+                "clear : clears the console\n" +
+                "pwd : print current directory\n" +
+                "rmdir [path] :remove this path\n" +
+                "ls : list all files in current directory\n" +
+                "more [path] : display content of this path\n"+
+                "cd [path] : change Default directory to this path");
+    }
+
     public void setDd (String newDd){
         Dd = newDd;
     }
