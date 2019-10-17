@@ -204,4 +204,12 @@ public class Terminal{
     public void setDd (String newDd){
         Dd = newDd;
     }
+
+    public void rm(String sourcePath) {
+        File f= new File (sourcePath);
+        if(f.delete())
+            System.out.println("deleted");
+        else
+            System.out.println("Not deleted");
+    }
 }

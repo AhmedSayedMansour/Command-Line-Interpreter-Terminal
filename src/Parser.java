@@ -45,10 +45,13 @@ public class Parser {
         else if( cmd.matches("cd") && args.size()==1  ){
             return true;
         }
+        else if( cmd.matches("rm") && args.size()==1  ){
+            return true;
+        }
         else{
             System.out.print(input + ": command not found\n");
             emptyattr();
-            return true;
+            return false;
         }
     }
 
@@ -78,5 +81,16 @@ public class Parser {
 
     public ArrayList<String> getArguments(){
         return args;
+    }
+
+    public void setCmd (String C){
+        cmd = C;
+    }
+
+    public void setArgs(String[] arr,Integer f,Integer l){
+        args.clear();
+        for(int i = l ; i < l-f ; ++i){
+            args.add(arr[i]);
+        }
     }
 }
