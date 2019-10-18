@@ -105,5 +105,17 @@ public class CLI_Main {
             term.rm( CLI.getArguments().get(0) );
             CLI.emptyattr();
         }
+        else if( CLI.getCmd().matches("cp") && CLI.getArguments().size()==2  ){
+            term.cp( CLI.getArguments().get(0) , CLI.getArguments().get(1) );
+            CLI.emptyattr();
+        }
+        else if( CLI.getCmd().matches("mv") && CLI.getArguments().size()==2  ){
+            term.mv( CLI.getArguments().get(0) , CLI.getArguments().get(1) );
+            CLI.emptyattr();
+        }
+        else if( CLI.getCmd().matches("cat") && CLI.getArguments().size()>0  ){
+            term.cat(CLI.getArguments());
+            CLI.emptyattr();
+        }
     }
 }

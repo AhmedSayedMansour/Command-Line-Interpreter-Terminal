@@ -48,6 +48,15 @@ public class Parser {
         else if( cmd.matches("rm") && args.size()==1  ){
             return true;
         }
+        else if( cmd.matches("cp") && args.size()==2  ){
+            return true;
+        }
+        else if( cmd.matches("mv") && args.size()==2  ){
+            return true;
+        }
+        else if( cmd.matches("cat") && args.size()>0  ){
+            return true;
+        }
         else{
             System.out.print(input + ": command not found\n");
             emptyattr();
