@@ -9,11 +9,11 @@ public class CLI_Main {
         Scanner In = new Scanner(System.in);
         Color Col = new Color();
 
-        boolean flag = true;
+        boolean flag = false;
         Integer pipe = 0;
         String input = "";
 
-        while (flag){
+        while (!flag){
 
             System.out.print(Col.print$("$ "));
             input = In.nextLine();
@@ -21,9 +21,8 @@ public class CLI_Main {
             pipe = pipes.length;
 
             for(int i = 0 ; i < pipe ; ++i ){
-                flag = CLI.parse(pipes[i]);
-                if (!flag)  continue;                       //check if the command is right
-                if ( CLI.getCmd().matches("exit") && CLI.getArguments().size()==0 )     continue;
+                if (!CLI.parse(pipes[i]))  continue;                       //check if the command is right
+                flag = CLI.getCmd().matches("exit") && CLI.getArguments().size()==0 ;
                 cases(CLI);
             }
 
