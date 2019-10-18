@@ -212,5 +212,146 @@ public class Terminal{
         else
             System.out.println("Not deleted");
     }
+     public void rm(String sourcePath) {
+        File f= new File (sourcePath);
+        File f1= new File (Dd+sourcePath);
+        if (f.exists()) {
+        	if(f.delete())
+        		System.out.println("deleted");
+        	else
+        		System.out.println("Not deleted");
+        }
+        else if (f1.exists()) {
+        	if(f.delete())
+        		System.out.println("deleted");
+        	else
+        		System.out.println("Not deleted");
+        }
+    
+    }
+    
+public void cp(String sourcePath, String destinationPath )throws IOException {
+		
+		String a="";
+		
+		
+		File f =new File(sourcePath);
+		File f1= new File (Dd+sourcePath);
+		if (f.exists()) {
+			a=sourcePath;
+			
+		}
+		 
+		else if (f1.exists()) {
+			a=Dd+sourcePath;
+
+		}
+		else {
+			System.out.println("can't find source to copy");
+			return;
+		}
+		
+		File f2= new File (destinationPath);
+		File f3= new File (Dd+destinationPath);
+		String b;
+		if (f2.exists()) {
+			b=destinationPath;
+		}
+		else if (f3.exists()) {
+			b=Dd+destinationPath;
+		}
+		else {
+			System.out.println("can't find right path to copy");
+			return;		
+		}
+		
+		
+		
+		
+		
+		FileReader myReader= new FileReader(a);
+		FileWriter myWriter= new FileWriter(b);
+		Scanner read= new Scanner(myReader);
+		String s;
+		while (read.hasNextLine()) {
+			 s = read.nextLine();
+			 myWriter.write(s+"\n");
+		}
+
+		myReader.close();
+		myWriter.close();
+		read.close();		
+	}
+
+	public void mv(String sourcePath, String destinationPath )throws IOException{
+	cp( sourcePath,  destinationPath );
+	rm(sourcePath);
+	
+	}
+	public ArrayList<String> cat(String [] a) throws FileNotFoundException {
+		ArrayList<String> c=new ArrayList<String>();
+		String b;
+		for (String i:a) {
+		File f =new File(i);
+		if (!f.exists()) {
+			System.out.println("File"+i+ " not existed");
+			continue;
+		}
+		FileReader f1= new FileReader (i);	
+		Scanner s= new Scanner (f1);
+		while (s.hasNextLine()) {
+			b=s.nextLine();
+			System.out.println(b);
+			
+		}
+		s.close();
+		}
+		return c;
+	}
+	
+	public void R1Command(String path, ArrayList<String> content) throws IOException {
+		File f= new File (path);
+		File f1= new File (Dd+path);
+		String a;
+		if (f.exists()) {
+			a=path;
+		}
+		else if (f1.exists()) {
+			a=Dd+path;
+		}
+		else {
+			System.out.println("can't find path to copy");
+			return;		
+		}
+		FileWriter file = new FileWriter(a);
+		for (String i: content) {
+			file.write(i+"\n");
+			
+		}
+		file.close();
+	}
+	public void R2Command(String path, ArrayList<String> content) throws IOException{
+		File f= new File (path);
+		File f1= new File (Dd+path);
+		String a;
+		if (f.exists()) {
+			a=path;
+		}
+		else if (f1.exists()) {
+			a=Dd+path;
+		}
+		else {
+			System.out.println("can't find source to copy");
+			return;		
+		}
+		 BufferedWriter file = new BufferedWriter(new FileWriter(a, true));
+		 for (String i: content) {
+				file.write(i+"\n");
+				
+			}
+		 file.close();
+		 
+	}
+	
 
 }
