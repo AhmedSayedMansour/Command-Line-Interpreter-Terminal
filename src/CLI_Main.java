@@ -25,9 +25,9 @@ public class CLI_Main {
                 flag = CLI.getCmd().matches("exit") && CLI.getArguments().size()==0 ;
                 cases(CLI);
             }
-
         }
     }
+
 
     public static void cases( Parser CLI ) throws Exception {
         Terminal term = new Terminal();
@@ -113,7 +113,23 @@ public class CLI_Main {
             CLI.emptyattr();
         }
         else if( CLI.getCmd().matches("cat") && CLI.getArguments().size()>0  ){
-            term.cat(CLI.getArguments());
+            if ( CLI.getArguments().contains(">") ){
+                String path = CLI.getArguments().get(CLI.getArguments().size()-1);
+                CLI.getArguments().remove(CLI.getArguments().size()-1);
+                CLI.getArguments().remove(CLI.getArguments().size()-1);
+                term.R1Command(path, term.cat( CLI.getArguments() ) ) ;
+            }
+            else if (CLI.getArguments().contains(">>") ){
+                String path = CLI.getArguments().get(CLI.getArguments().size()-1);
+                CLI.getArguments().remove(CLI.getArguments().size()-1);
+                CLI.getArguments().remove(CLI.getArguments().size()-1);
+                term.R2Command(path, term.cat( CLI.getArguments() ) ) ;
+            }
+            else {
+                for (String i : term.cat( CLI.getArguments() ) ) {
+                    System.out.println(i);
+                }
+            }
             CLI.emptyattr();
         }
     }

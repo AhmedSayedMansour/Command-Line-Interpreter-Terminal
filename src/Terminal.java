@@ -229,53 +229,67 @@ public class Terminal{
 
     }
 
-    public Boolean cp(String sourcePath, String destinationPath ) {
+    public Boolean cp(String sourcePath, String destinationPath ) throws IOException{
 
         String a="";
         File f =new File(sourcePath);
         File f1= new File (Dd+sourcePath);
-        if (f.exists()) {
-            a=sourcePath;
-        }
-        else if (f1.exists()) {
+        Boolean help = true;
+        if (f1.exists()) {
             a=Dd+sourcePath;
+        }
+        else if (f.exists()) {
+            a=sourcePath;
         }
         else {
             System.out.println("can't find source to copy");
             return false;
         }
 
-        try {
-            FileReader myReader= new FileReader(a);
-            File file1= new File(destinationPath);
-            File file2= new File(Dd+destinationPath);
-            String b;
-            if (file1.exists()) {
-                b=destinationPath;
-            }
-            else if (file2.createNewFile()||file2.exists()) {
-                b=Dd+destinationPath;
-            }
-            else {
-                System.out.println("wrong destination path");
-                return false;
-            }
-            FileWriter myWriter= new FileWriter(b);
-            Scanner read= new Scanner(myReader);
-            String s;
-            while (read.hasNextLine()) {
-                s = read.nextLine();
-                myWriter.write(s+"\n");
-            }
-
-            myReader.close();
-            myWriter.close();
-            read.close();
-            return true;
+        FileReader myReader= new FileReader(a);
+        File file1= new File(destinationPath);
+        File file2= new File(Dd+destinationPath);
+        String b = "";
+        if (file2.exists()) {
+            b=Dd+destinationPath;
         }
-        catch(IOException e) {
-            System.out.println("wrong input");
-            return false;}
+        else if (file1.exists()) {
+            b=destinationPath;
+        }
+        else {
+            try{
+                if(file2.createNewFile()) {
+                    b=Dd+destinationPath;
+                    help = false;
+                }
+            }catch (IOException e){}
+
+            if(help){
+                try{
+                    if(file1.createNewFile()) {
+                        b=destinationPath;
+                    }
+                }catch (IOException e ){
+                    System.out.println("Error");
+                    return false;
+                }
+            }
+        }
+
+        FileWriter myWriter= new FileWriter(b);
+
+        Scanner read= new Scanner(myReader);
+        String s;
+        while (read.hasNextLine()) {
+            s = read.nextLine();
+            myWriter.write(s+"\n");
+        }
+
+        myReader.close();
+        myWriter.close();
+        read.close();
+        return true;
+
     }
 
     public void mv(String sourcePath, String destinationPath )throws IOException{
@@ -304,33 +318,51 @@ public class Terminal{
             Scanner s= new Scanner (f1);
             while (s.hasNextLine()) {
                 b=s.nextLine();
-                System.out.println(b);
+                c.add(b);
             }
             s.close();
         }
         return c;
     }
 
-    public void R1Command(String path, ArrayList<String> content) throws IOException {
-        File f= new File (path);
-        File f1= new File (Dd+path);
-        String a;
-        if (f1.exists()) {
-            a=Dd+path;
+    public void R1Command(String destinationPath, ArrayList<String> content) throws IOException {
+
+        Boolean help = true ;
+        File file1= new File(destinationPath);
+        File file2= new File(Dd+destinationPath);
+        String b = "";
+        if (file2.exists()) {
+            b=Dd+destinationPath;
         }
-        else if (f.exists()) {
-            a=path;
+        else if (file1.exists()) {
+            b=destinationPath;
         }
         else {
-            System.out.println("can't find path to copy");
-            return;
+            try{
+                if(file2.createNewFile()) {
+                    b=Dd+destinationPath;
+                    help = false;
+                }
+            }catch (IOException e){}
+
+            if(help){
+                try{
+                    if(file1.createNewFile()) {
+                        b=destinationPath;
+                    }
+                }catch (IOException e ){
+                    System.out.println("Error");
+                    return ;
+                }
+            }
         }
-        FileWriter file = new FileWriter(a);
-        for (String i: content) {
-            file.write(i+"\n");
+        FileWriter file = new FileWriter(b);
+        for (String i : content) {
+            file.write(i + "\n");
         }
         file.close();
     }
+
     public void R2Command(String path, ArrayList<String> content) throws IOException{
         File f= new File (path);
         File f1= new File (Dd+path);
