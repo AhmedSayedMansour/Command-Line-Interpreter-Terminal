@@ -283,7 +283,7 @@ public class Terminal{
             rm(sourcePath);
     }
 
-    public ArrayList<String> cat(String [] a) throws FileNotFoundException {
+    public ArrayList<String> cat(ArrayList<String> a) throws FileNotFoundException {
         ArrayList<String> c=new ArrayList<String>();
         String b;
         for (String i:a) {
