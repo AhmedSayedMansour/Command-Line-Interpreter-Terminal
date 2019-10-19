@@ -73,8 +73,21 @@ public class Parser {
             cmd=input.substring(0,input.indexOf(" "));
             input = input.substring(input.indexOf(" ")+1,input.length());
             argsarr = input.split(" ");
-            for (String i:argsarr) {
-                args.add(i);
+            String a= "";
+            for (int i=0 ; i < argsarr.length ; ++i) {
+                if ( argsarr[i].charAt(0) == '"'){
+                    a = argsarr[i].substring(1,argsarr[i].length()) + " ";
+                    i++;
+                    while ( !( argsarr[i].charAt(argsarr[i].length()-1)=='"' ) ){
+                        a += argsarr[i] + " ";
+                        i++;
+                    }
+                    a += argsarr[i].substring(0,argsarr[i].length()-1);
+                    args.add(a);
+                }
+                else{
+                    args.add(argsarr[i]);
+                }
             }
         }
     }
