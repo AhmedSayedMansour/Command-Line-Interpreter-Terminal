@@ -393,4 +393,8 @@ public class Terminal{
         }
         file.close();
     }
+
+    public String getDd(){
+        return Dd;
+    }
 }

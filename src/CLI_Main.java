@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -78,21 +79,24 @@ public class CLI_Main {
         else if( CLI.getCmd().matches("rmdir") && CLI.getArguments().size()==1  ){
             term.rmdir(CLI.getArguments().get(0) );
         }
-        else if( CLI.getCmd().matches("ls") && CLI.getArguments().size()==0  ){
+        else if( CLI.getCmd().matches("ls")  ){
+            ArrayList<String> Arr = new ArrayList<String>();
             if ( CLI.getArguments().contains(">") ){
                 String path = CLI.getArguments().get(CLI.getArguments().size()-1);
                 CLI.getArguments().remove(CLI.getArguments().size()-1);
                 CLI.getArguments().remove(CLI.getArguments().size()-1);
-
-                term.R1Command(path, term.ls( CLI.getArguments().get(0) ) ) ;
+                if(CLI.getArguments().size() == 0)  term.R1Command( term.getDd(), Arr );
+                else term.R1Command(path, term.ls( CLI.getArguments().get(0) ) ) ;
             }
             else if (CLI.getArguments().contains(">>") ){
                 String path = CLI.getArguments().get(CLI.getArguments().size()-1);
                 CLI.getArguments().remove(CLI.getArguments().size()-1);
                 CLI.getArguments().remove(CLI.getArguments().size()-1);
+                if(CLI.getArguments().size() == 0)  term.R1Command( term.getDd(), Arr );
                 term.R2Command(path, term.ls( CLI.getArguments().get(0) ) ) ;
             }
             else {
+                if(CLI.getArguments().size() == 0)  term.ls( term.getDd() );
                 for (String i : term.ls( CLI.getArguments().get(0) ) ) {
                     System.out.println(i);
                 }
