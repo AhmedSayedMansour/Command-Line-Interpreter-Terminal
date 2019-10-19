@@ -36,7 +36,7 @@ public class Parser {
         else if( cmd.matches("rmdir") && args.size()==1  ){
             return true;
         }
-        else if( cmd.matches("ls") && args.size()==0  ){
+        else if( cmd.matches("ls")  ){
             return true;
         }
         else if( cmd.matches("more") && args.size()==1  ){

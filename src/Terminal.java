@@ -54,36 +54,26 @@ public class Terminal{
         }
     }
 
-    public ArrayList<String> ls(String path){
-        File file = new File(Dd+path);
-        File filesout = new File(path);
-        String [] arr  = file.list();
-        String [] arr2 = filesout.list();
-        ArrayList<String> lst = new ArrayList<>();
-
-        if (file.exists()){
-            if (arr.length<=0){
-                //System.out.println("Directory is empty");
+    public String [] ls(String path) {
+        try {
+            File filesout = new File(path);
+            if (filesout.exists()) {
+                String[] arr2 = filesout.list();
+                if (arr2.length <= 0) {
+                    System.out.println("Directory is empty");
+                } else {
+                    return arr2;
+                }
+            } else {
+                obj.printError("Path is not available");
+                String[] arr2 = {"Directory is empty"};
+                return arr2;
             }
-            else {
-                Collections.addAll(lst, arr);
-                return lst;
-            }
+        } catch (Exception e) {
+            System.out.println("path Error");
         }
-        else if (filesout.exists()){
-
-            if (arr.length<=0){
-                //System.out.println("Directory is empty");
-            }
-            else {
-                return lst;
-            }
-        }
-        else {
-            obj.printError("Path is not available");
-            return lst;
-        }
-        return lst;
+        String[] arr2 = {"Directory is empty"};
+        return  arr2;
     }
 
     public void more(String path) throws Exception  {

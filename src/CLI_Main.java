@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -85,20 +86,44 @@ public class CLI_Main {
                 String path = CLI.getArguments().get(CLI.getArguments().size()-1);
                 CLI.getArguments().remove(CLI.getArguments().size()-1);
                 CLI.getArguments().remove(CLI.getArguments().size()-1);
-                if(CLI.getArguments().size() == 0)  term.R1Command( term.getDd(), Arr );
-                else term.R1Command(path, term.ls( CLI.getArguments().get(0) ) ) ;
+                if(CLI.getArguments().size() == 0)  {
+                    String [] r = term.ls(term.getDd());
+                    Collections.addAll(Arr, r);
+                    term.R1Command( path, Arr );
+                }
+                else {
+                    String [] r = term.ls(CLI.getArguments().get(0));
+                    Collections.addAll(Arr, r);
+                    term.R1Command(path, Arr );
+                }
             }
             else if (CLI.getArguments().contains(">>") ){
                 String path = CLI.getArguments().get(CLI.getArguments().size()-1);
                 CLI.getArguments().remove(CLI.getArguments().size()-1);
                 CLI.getArguments().remove(CLI.getArguments().size()-1);
-                if(CLI.getArguments().size() == 0)  term.R1Command( term.getDd(), Arr );
-                term.R2Command(path, term.ls( CLI.getArguments().get(0) ) ) ;
+                if(CLI.getArguments().size() == 0)  {
+                    String [] r = term.ls(term.getDd());
+                    Collections.addAll(Arr, r);
+                    term.R2Command( path, Arr );
+                }
+                else {
+                    String [] r = term.ls(CLI.getArguments().get(0));
+                    Collections.addAll(Arr, r);
+                    term.R2Command(path, Arr );
+                }
             }
             else {
-                if(CLI.getArguments().size() == 0)  term.ls( term.getDd() );
-                for (String i : term.ls( CLI.getArguments().get(0) ) ) {
-                    System.out.println(i);
+                if(CLI.getArguments().size() == 0)  {
+                    String [] r = term.ls(term.getDd());
+                    for( String i : r){
+                        System.out.println(i);
+                    }
+                }
+                else {
+                    String [] r = term.ls(CLI.getArguments().get(0));
+                    for( String i : r){
+                        System.out.println(i);
+                    }
                 }
             }
         }
