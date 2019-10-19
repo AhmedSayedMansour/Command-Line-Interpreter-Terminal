@@ -35,29 +35,22 @@ public class CLI_Main {
 
         if ( CLI.getCmd().matches("date") && CLI.getArguments().size() == 0 ){
             term.date();
-            CLI.emptyattr();
         }
         else if( CLI.getCmd().matches("help") && CLI.getArguments().size() == 0 ){
             term.help();
-            CLI.emptyattr();
         }
         else if(  ( CLI.getCmd().matches("exit")&& CLI.getArguments().size()==0  )  || ( (CLI.getCmd().matches("exit")) && (CLI.getArguments().size()==1) && (CLI.getArguments().get(0).matches("--help")) ) ){
-            if( CLI.getCmd().matches("exit") && CLI.getArguments().size()==0 ){
-                CLI.emptyattr();
-            }
-            else{
+            if( ( (CLI.getCmd().matches("exit")) && (CLI.getArguments().size()==1) && (CLI.getArguments().get(0).matches("--help")) )){
                 System.out.print("exit: exit [n]\n" +
                         "    Exit the shell.\n" +
                         "\n" +
                         "    Exits the shell with a status of N.  If N is omitted, the exit status\n" +
                         "    is that of the last command executed.\n" +
                         "\n");
-                CLI.emptyattr();
             }
         }
         else if( CLI.getCmd().matches("clear") && CLI.getArguments().size()==0 ){
             term.clear();
-            CLI.emptyattr();
         }
         else if(CLI.getCmd().matches("mkdir")){
             int begin = 0;
@@ -78,39 +71,47 @@ public class CLI_Main {
                     term.mkdir(CLI.getArguments().get(i),v);
                 }
             }
-            CLI.emptyattr();
         }
         else if( CLI.getCmd().matches("pwd") && CLI.getArguments().size()==0 ){
             term.pwd();
-            CLI.emptyattr();
         }
         else if( CLI.getCmd().matches("rmdir") && CLI.getArguments().size()==1  ){
             term.rmdir(CLI.getArguments().get(0) );
-            CLI.emptyattr();
         }
         else if( CLI.getCmd().matches("ls") && CLI.getArguments().size()==0  ){
-            term.ls();
-            CLI.emptyattr();
+            if ( CLI.getArguments().contains(">") ){
+                String path = CLI.getArguments().get(CLI.getArguments().size()-1);
+                CLI.getArguments().remove(CLI.getArguments().size()-1);
+                CLI.getArguments().remove(CLI.getArguments().size()-1);
+
+                term.R1Command(path, term.ls( CLI.getArguments().get(0) ) ) ;
+            }
+            else if (CLI.getArguments().contains(">>") ){
+                String path = CLI.getArguments().get(CLI.getArguments().size()-1);
+                CLI.getArguments().remove(CLI.getArguments().size()-1);
+                CLI.getArguments().remove(CLI.getArguments().size()-1);
+                term.R2Command(path, term.ls( CLI.getArguments().get(0) ) ) ;
+            }
+            else {
+                for (String i : term.ls( CLI.getArguments().get(0) ) ) {
+                    System.out.println(i);
+                }
+            }
         }
         else if( CLI.getCmd().matches("more") && CLI.getArguments().size()==1  ){
             term.more( CLI.getArguments().get(0) );
-            CLI.emptyattr();
         }
         else if( CLI.getCmd().matches("cd") && CLI.getArguments().size()==1  ){
             term.setDd( term.cd(CLI.getArguments().get(0)) );
-            CLI.emptyattr();
         }
         else if( CLI.getCmd().matches("rm") && CLI.getArguments().size()==1  ){
             term.rm( CLI.getArguments().get(0) );
-            CLI.emptyattr();
         }
         else if( CLI.getCmd().matches("cp") && CLI.getArguments().size()==2  ){
             term.cp( CLI.getArguments().get(0) , CLI.getArguments().get(1) );
-            CLI.emptyattr();
         }
         else if( CLI.getCmd().matches("mv") && CLI.getArguments().size()==2  ){
             term.mv( CLI.getArguments().get(0) , CLI.getArguments().get(1) );
-            CLI.emptyattr();
         }
         else if( CLI.getCmd().matches("cat") && CLI.getArguments().size()>0  ){
             if ( CLI.getArguments().contains(">") ){
@@ -130,7 +131,7 @@ public class CLI_Main {
                     System.out.println(i);
                 }
             }
-            CLI.emptyattr();
         }
+        CLI.emptyattr();
     }
 }
