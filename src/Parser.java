@@ -57,6 +57,9 @@ public class Parser {
         else if( cmd.matches("cat") && args.size()>0  ){
             return true;
         }
+        else if( cmd.matches("echo") && args.size() ==1 ){
+            return true;
+        }
         else{
             System.out.print(input + ": command not found\n");
             emptyattr();

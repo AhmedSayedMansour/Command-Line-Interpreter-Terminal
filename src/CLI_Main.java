@@ -8,6 +8,7 @@ public class CLI_Main {
     public static void main (String[] args) throws Exception {
 
         Parser CLI = new Parser();
+        Terminal term = new Terminal();
         Scanner In = new Scanner(System.in);
         Color Col = new Color();
 
@@ -25,14 +26,13 @@ public class CLI_Main {
             for(int i = 0 ; i < pipe ; ++i ){
                 if (!CLI.parse(pipes[i]))  continue;                       //check if the command is right
                 flag = CLI.getCmd().matches("exit") && CLI.getArguments().size()==0 ;
-                cases(CLI);
+                cases(CLI,term);
             }
         }
     }
 
 
-    public static void cases( Parser CLI ) throws Exception {
-        Terminal term = new Terminal();
+    public static void cases( Parser CLI ,Terminal term) throws Exception {
         Color Col = new Color();
 
         if ( CLI.getCmd().matches("date") && CLI.getArguments().size() == 0 ){
@@ -160,6 +160,9 @@ public class CLI_Main {
                     System.out.println(i);
                 }
             }
+        }
+        else if( CLI.getCmd().matches("echo") && CLI.getArguments().size()==1  ){
+            term.echo( CLI.getArguments().get(0) );
         }
         CLI.emptyattr();
     }

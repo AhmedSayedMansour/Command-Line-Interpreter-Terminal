@@ -387,4 +387,8 @@ public class Terminal{
     public String getDd(){
         return Dd;
     }
+
+    public void echo(String s){
+        System.out.println(s);
+    }
 }
